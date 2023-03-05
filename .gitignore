@@ -1,0 +1,9 @@
+# Ignorar a pasta postgres
+postgres/
+
+# Ignorar a pasta mongo
+mongo/
+
+authenticate/node_modules
+
+sales/node_modules

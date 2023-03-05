@@ -1,0 +1,71 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres
+    container_name: container_microservices_auth
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 553322@@##
+      TZ: America/Sao_Paulo
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+  mongodb:
+    image: mongo
+    restart: always
+    user: root
+    container_name: container_microservices_vendas
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 553322@@##
+    volumes:
+      - ./mongo:/etc/mongo
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    restart: always
+    ports:
+      - "5672:5672"
+      - "25676:25676"
+      - "15672:15672"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+  sales_api:
+    image: sales-api:latest
+    container_name: sales_api
+    restart: always
+    ports:
+      - "8082:8082"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 206M
+  auth_api:
+    image: auth-api:latest
+    container_name: auth_api
+    restart: always
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 206M
+
