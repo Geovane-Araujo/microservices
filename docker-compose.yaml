@@ -47,7 +47,7 @@ services:
           cpus: '1'
           memory: 1024M
   sales_api:
-    image: sales-api:latest
+    build: './sales'
     container_name: sales_api
     restart: always
     ports:
@@ -58,11 +58,22 @@ services:
           cpus: '1'
           memory: 206M
   auth_api:
-    image: auth-api:latest
+    build: './authenticate'
     container_name: auth_api
     restart: always
     ports:
       - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 206M
+  product_api:
+    build: './microservice-product'
+    container_name: product_api
+    restart: always
+    ports:
+      - "8081:8081"
     deploy:
       resources:
         limits:

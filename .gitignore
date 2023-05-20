@@ -3,7 +3,7 @@ postgres/
 
 # Ignorar a pasta mongo
 mongo/
-
+# Ignorar a pasta mongo
 authenticate/node_modules
-
+# Ignorar a pasta mongo
 sales/node_modules
