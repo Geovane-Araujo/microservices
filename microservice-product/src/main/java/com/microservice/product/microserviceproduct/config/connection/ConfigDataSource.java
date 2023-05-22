@@ -1,49 +1,30 @@
 package com.microservice.product.microserviceproduct.config.connection;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.stereotype.Component;
+import java.util.Map;
 
 
-public class ConfigDataSource /**implements MultiTenantConnectionProvider **/{
+@Component
+public class ConfigDataSource implements CurrentTenantIdentifierResolver, HibernatePropertiesCustomizer {
 
 
-    private DataSource dataSource;
+    private String currentTenant = "public";
 
-
-    public Connection getAnyConnection() throws SQLException {
-        return dataSource.getConnection();
+    @Override
+    public String resolveCurrentTenantIdentifier() {
+        return currentTenant;
     }
 
-
-    public void releaseAnyConnection(Connection connection) throws SQLException {
-
-    }
-
-
-    public Connection getConnection(String s) throws SQLException {
-        Connection con = dataSource.getConnection();
-        con.setSchema(s);
-        return con;
-    }
-
-
-    public void releaseConnection(String s, Connection connection) throws SQLException {
-        connection.close();
-    }
-
-
-    public boolean supportsAggressiveRelease() {
-        return true;
-    }
-
-
-    public boolean isUnwrappableAs(Class<?> aClass) {
+    @Override
+    public boolean validateExistingCurrentSessions() {
         return false;
     }
 
-
-    public <T> T unwrap(Class<T> aClass) {
-        return null;
+    @Override
+    public void customize(Map<String, Object> hibernateProperties) {
+        hibernateProperties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, this);
     }
 }

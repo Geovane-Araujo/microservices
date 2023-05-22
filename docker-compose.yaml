@@ -37,46 +37,48 @@ services:
     image: rabbitmq:3-management
     container_name: rabbit
     restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     ports:
-      - "5672:5672"
-      - "25676:25676"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
     deploy:
       resources:
         limits:
           cpus: '1'
           memory: 1024M
-  sales_api:
-    build: './sales'
-    container_name: sales_api
-    restart: always
-    ports:
-      - "8082:8082"
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 206M
-  auth_api:
-    build: './authenticate'
-    container_name: auth_api
-    restart: always
-    ports:
-      - "8080:8080"
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 206M
-  product_api:
-    build: './microservice-product'
-    container_name: product_api
-    restart: always
-    ports:
-      - "8081:8081"
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 206M
+  # sales_api:
+  #   build: './sales'
+  #   container_name: sales_api
+  #   restart: always
+  #   ports:
+  #     - "8082:8082"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: 206M
+  # auth_api:
+  #   build: './authenticate'
+  #   container_name: auth_api
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: 206M
+  # product_api:
+  #   build: './microservice-product'
+  #   container_name: product_api
+  #   restart: always
+  #   ports:
+  #     - "8081:8081"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: 206M
 
